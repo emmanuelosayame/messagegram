@@ -1,5 +1,8 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
@@ -20,8 +23,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
+    'geist': require('../assets/fonts/Geist-Regular.otf'),
+    'geist-sb': require('../assets/fonts/Geist-SemiBold.otf'),
+    'geist-b': require('../assets/fonts/Geist-Bold.otf'),
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -48,8 +52,16 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        <Stack.Screen name='modal' options={{ presentation: 'modal' }} />
+        <Stack.Screen
+          name='chats/[slug]/index'
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='chats/[slug]/Info'
+          options={{ presentation: 'modal', headerShown: false }}
+        />
       </Stack>
     </ThemeProvider>
   );

@@ -1,18 +1,13 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
-
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useColorScheme,
+} from 'react-native';
 import Colors from '../../constants/Colors';
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -21,35 +16,80 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarStyle: {
+          height: 65,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingBottom: 5,
+          gap: 5,
+        },
       }}>
       <Tabs.Screen
-        name="index"
+        name='index'
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+          title: 'Message',
+          tabBarLabelStyle: { fontSize: 16 },
+          tabBarIcon: ({ color }) => (
+            <AntDesign name='message1' color={color} size={25} s />
+          ),
+          header: () => <MessageHeader />,
+        }}
+      />
+      <Tabs.Screen
+        name='contacts'
+        options={{
+          title: 'Contacts',
+          tabBarLabelStyle: { fontSize: 16 },
+          tabBarIcon: ({ color }) => (
+            <AntDesign name='user' color={color} size={25} />
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name='setting'
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Setting',
+          tabBarLabelStyle: { fontSize: 16 },
+          tabBarIcon: ({ color }) => (
+            <AntDesign name='setting' color={color} size={25} />
+          ),
         }}
       />
     </Tabs>
   );
 }
+
+const MessageHeader = () => {
+  const colorScheme = useColorScheme();
+
+  return (
+    <View style={styles.headerContainer}>
+      <Text style={{ fontSize: 23, fontWeight: '600' }}>Chats</Text>
+      <Link href='/modal' asChild>
+        <Pressable>
+          {({ pressed }) => (
+            <AntDesign
+              name='search1'
+              size={30}
+              color={Colors[colorScheme ?? 'light'].text}
+              style={{ opacity: pressed ? 0.5 : 1 }}
+            />
+          )}
+        </Pressable>
+      </Link>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 50,
+    paddingBottom: 15,
+    paddingHorizontal: 30,
+    backgroundColor: 'white',
+    borderBottomWidth: 0.7,
+    borderBottomColor: 'gray',
+  },
+});
