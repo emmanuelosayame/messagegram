@@ -59,8 +59,16 @@ function RootLayoutNav() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name='chats/[slug]/Info'
+          name='chats/[slug]/info/index'
           options={{ presentation: 'modal', headerShown: false }}
+        />
+        <Stack.Screen
+          name='chats/[slug]/info/Medias'
+          options={{ presentation: 'modal', headerShown: false }}
+        />
+        <Stack.Screen
+          name='new'
+          options={{ presentation: 'containedModal', headerTitle: 'New Chat' }}
         />
       </Stack>
     </ThemeProvider>

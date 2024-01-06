@@ -3,13 +3,9 @@ import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import ChatHeader from '../../../components/ChatHeader';
 import { chats } from '../../../data';
 import { Text } from '../../../components/Themed';
-import {
-  AntDesign,
-  FontAwesome,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ChatScreen = () => {
   const { slug } = useLocalSearchParams();
@@ -31,7 +27,7 @@ const ChatScreen = () => {
   if (!chat) return <View></View>;
 
   return (
-    <View style={{ backgroundColor: 'white', height: '100%' }}>
+    <LinearGradient colors={['#FFF', '#F4F4F4']} style={{ height: '100%' }}>
       <ChatHeader chat={chat} />
       <FlatList
         contentContainerStyle={styles.container}
@@ -42,7 +38,7 @@ const ChatScreen = () => {
         )}
       />
       <BottomBar />
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -53,27 +49,32 @@ type CBProps = {
 
 const ChatBubble = ({ body, type }: CBProps) => {
   return (
-    <View
-      style={{
-        ...styles.chatBubble,
-        backgroundColor: type === 'receiver' ? '#F7F7F7' : '#2F80ED',
-        alignSelf: type === 'receiver' ? 'flex-start' : 'flex-end',
-      }}>
-      <Text
-        style={{
-          color: type === 'receiver' ? 'black' : 'white',
-          fontSize: 17,
-        }}>
-        {body}
-      </Text>
-      <Text
-        style={{
-          textAlign: 'right',
-          color: type === 'receiver' ? 'black' : 'white',
-        }}>
-        19:04
-      </Text>
-    </View>
+    <Pressable>
+      {({ pressed }) => (
+        <View
+          style={{
+            ...styles.chatBubble,
+            backgroundColor: type === 'receiver' ? '#EDEDED' : '#2F80ED',
+            alignSelf: type === 'receiver' ? 'flex-start' : 'flex-end',
+            opacity: pressed ? 0.5 : 1,
+          }}>
+          <Text
+            style={{
+              color: type === 'receiver' ? 'black' : 'white',
+              fontSize: 17,
+            }}>
+            {body}
+          </Text>
+          <Text
+            style={{
+              textAlign: 'right',
+              color: type === 'receiver' ? 'black' : 'white',
+            }}>
+            19:04
+          </Text>
+        </View>
+      )}
+    </Pressable>
   );
 };
 
@@ -135,6 +136,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     gap: 10,
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   chatBubble: {
     borderRadius: 12,

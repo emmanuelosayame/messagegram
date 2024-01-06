@@ -42,7 +42,7 @@ export default function MessagesScreen() {
 
 const NewChat = () => {
   return (
-    <Pressable style={styles.newChatButton}>
+    <Pressable style={styles.newChatButton} onPress={() => router.push('/new')}>
       {({ pressed }) => (
         <MaterialCommunityIcons name='chat-plus' size={25} color={'white'} />
       )}

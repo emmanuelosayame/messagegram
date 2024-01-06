@@ -1,13 +1,10 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Link, Tabs } from 'expo-router';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  useColorScheme,
-} from 'react-native';
+import { Pressable, StyleSheet, View, useColorScheme } from 'react-native';
 import Colors from '../../constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, TextSb } from '../../components/Themed';
+import { MessageHeader } from '../../components/MessagesHeader';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -17,20 +14,24 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         tabBarStyle: {
-          height: 65,
+          height: 70,
           justifyContent: 'center',
           alignItems: 'center',
-          paddingBottom: 5,
-          gap: 5,
+          paddingVertical: 7,
+          gap: 12,
         },
       }}>
       <Tabs.Screen
         name='index'
         options={{
-          title: 'Message',
-          tabBarLabelStyle: { fontSize: 16 },
+          title: 'Messages',
+          tabBarActiveTintColor: 'black',
+          tabBarLabelStyle: {
+            fontSize: 15,
+            fontFamily: 'geist-sb',
+          },
           tabBarIcon: ({ color }) => (
-            <AntDesign name='message1' color={color} size={25} s />
+            <Ionicons name='chatbubbles' color={color} size={30} />
           ),
           header: () => <MessageHeader />,
         }}
@@ -39,9 +40,10 @@ export default function TabLayout() {
         name='contacts'
         options={{
           title: 'Contacts',
-          tabBarLabelStyle: { fontSize: 16 },
+          tabBarActiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 16, fontFamily: 'geist-sb' },
           tabBarIcon: ({ color }) => (
-            <AntDesign name='user' color={color} size={25} />
+            <Ionicons name='person' color={color} size={30} />
           ),
         }}
       />
@@ -49,47 +51,14 @@ export default function TabLayout() {
         name='setting'
         options={{
           title: 'Setting',
-          tabBarLabelStyle: { fontSize: 16 },
+          tabBarActiveTintColor: 'black',
+          tabBarLabelStyle: { fontSize: 16, fontFamily: 'geist-sb' },
           tabBarIcon: ({ color }) => (
             <AntDesign name='setting' color={color} size={25} />
           ),
+          headerShown: false,
         }}
       />
     </Tabs>
   );
 }
-
-const MessageHeader = () => {
-  const colorScheme = useColorScheme();
-
-  return (
-    <View style={styles.headerContainer}>
-      <Text style={{ fontSize: 23, fontWeight: '600' }}>Chats</Text>
-      <Link href='/modal' asChild>
-        <Pressable>
-          {({ pressed }) => (
-            <AntDesign
-              name='search1'
-              size={30}
-              color={Colors[colorScheme ?? 'light'].text}
-              style={{ opacity: pressed ? 0.5 : 1 }}
-            />
-          )}
-        </Pressable>
-      </Link>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 50,
-    paddingBottom: 15,
-    paddingHorizontal: 30,
-    backgroundColor: 'white',
-    borderBottomWidth: 0.7,
-    borderBottomColor: 'gray',
-  },
-});
