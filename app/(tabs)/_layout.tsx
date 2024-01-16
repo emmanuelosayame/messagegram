@@ -1,13 +1,28 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, StyleSheet, View, useColorScheme } from 'react-native';
+import { Link, Redirect, Tabs } from 'expo-router';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  View,
+  useColorScheme,
+} from 'react-native';
 import Colors from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, TextSb } from '../../components/Themed';
 import { MessageHeader } from '../../components/MessagesHeader';
+import { useStore } from '../../store';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  const { user, loading } = useStore((state) => state.auth);
+
+  if (loading) return <ActivityIndicator />;
+
+  if (!user) {
+    return <Redirect href={'/auth'} />;
+  }
 
   return (
     <Tabs

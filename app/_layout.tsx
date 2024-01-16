@@ -4,9 +4,10 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { Redirect, SplashScreen, Stack, router } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import { useSetAuth } from '../utils/hooks/useAuth';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -49,6 +50,8 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
+  useSetAuth();
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
@@ -69,6 +72,14 @@ function RootLayoutNav() {
         <Stack.Screen
           name='new'
           options={{ presentation: 'containedModal', headerTitle: 'New Chat' }}
+        />
+        <Stack.Screen
+          name='auth'
+          options={{ presentation: 'containedModal', headerShown: false }}
+        />
+        <Stack.Screen
+          name='login'
+          options={{ presentation: 'containedModal', headerShown: false }}
         />
       </Stack>
     </ThemeProvider>
